@@ -1,42 +1,22 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
-import { CreatePaisesDto } from './dto/create-paises.dto';
-import { UpdatePaisesDto } from './dto/update-paises.dto';
-import { PaisesService } from './paises.service';
+import { Controller, Get, Param } from '@nestjs/common';
+import { PaisesService } from 'src/services/paises.service';
 
-@Controller('paisess')
+@Controller('paises')
 export class PaisesController {
   constructor(private readonly paisesService: PaisesService) {}
 
-  @Post()
-  create(@Body() createPaisesDto: CreatePaisesDto) {
-    return this.paisesService.create(createPaisesDto);
+  @Get('continentes')
+  continentes() {
+    return this.paisesService.findAllContinentes();
   }
 
-  @Get()
-  findAll() {
-    return this.paisesService.findAll();
+  @Get('paisesContinente')
+  paisesContinente(@Param('continente') continente: string) {
+    return this.paisesService.findByContinente(continente);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paisesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaisesDto: UpdatePaisesDto) {
-    return this.paisesService.update(+id, updatePaisesDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paisesService.remove(+id);
+  @Get('paisMasPoblado')
+  paisMasPoblado() {
+    return this.paisesService.findPoblacionMax();
   }
 }
