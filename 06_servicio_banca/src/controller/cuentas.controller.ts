@@ -1,4 +1,17 @@
+<<<<<<< HEAD
 import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+=======
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
+>>>>>>> a59795fa43780f68c58d6d753f9252d99165b009
 import { Cuenta } from 'src/model/Cuenta';
 import { CuentasService } from 'src/service/cuentas.service';
 import { Response } from 'express';
