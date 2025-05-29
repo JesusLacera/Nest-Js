@@ -1,4 +1,3 @@
-import { Ficha } from './../../../primer_proyecto/src/model/Ficha';
 import {
   Body,
   Controller,
