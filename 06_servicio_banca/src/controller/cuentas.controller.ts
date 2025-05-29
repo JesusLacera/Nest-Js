@@ -1,14 +1,4 @@
-import { Ficha } from './../../../primer_proyecto/src/model/Ficha';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Cuenta } from 'src/model/Cuenta';
 import { CuentasService } from 'src/service/cuentas.service';
 import { Response } from 'express';
@@ -32,5 +22,15 @@ export class CuentasController {
     } else {
       response.status(409).json([]);
     }
+  }
+
+  //endpoint para altaCuenta
+  //Quiero hacer un response apartir de la variable en el service
+  //Necesito esto :@Res() resposne: Response
+  @Post('alta')
+  altaCuenta(@Body() datos: any) {
+    const cuenta: Cuenta = datos.cuenta;
+    const dnis: number[] = datos.dnis;
+    this.cuentasService.altaCuenta(cuenta, dnis);
   }
 }

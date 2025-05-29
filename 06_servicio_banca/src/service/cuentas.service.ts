@@ -1,9 +1,10 @@
+import { ClientesService } from './clientes.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from 'src/model/cliente';
 import { Cuenta } from 'src/model/Cuenta';
 import { Movimiento } from 'src/model/movimiento';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class CuentasService {
@@ -30,15 +31,25 @@ export class CuentasService {
 
   async findByDni(dni: number): Promise<Cuenta[]> {
     const cliente: Cliente = await this.clientesRepository.findOne({
-      where:{dni: dni}
-      ,
-      relations:["cuentas"]  
-  });
+      where: { dni: dni },
+      relations: ['cuentas'],
+    });
     if (cliente) {
       return cliente.cuentas;
     } else {
       return [];
     }
+  }
 
+  //Recibe una cuenta y un array con los dni`s de los titulares
+  //que debe tener esa cuenta. El metodo dara de alta dicha cuenta
+  //y le asignara esos titulares
+  async altaCuenta(cuenta: Cuenta, clientesdni: number[]): Promise<Cuenta> {
+    const clientes = await this.clientesRepository.find({
+      where: { dni: In(clientesdni) },
+    });
+    cuenta.clientes = clientes;
+    const nuevaCuenta = await this.cuentasRepository.save(cuenta);
+    return nuevaCuenta;
   }
 }
