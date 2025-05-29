@@ -1,15 +1,5 @@
 import { MovimientosService } from 'src/service/movimientos.service';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Movimiento } from 'src/model/movimiento';
 @Controller('movimientos')
 export class MovimientosController {
@@ -35,6 +25,6 @@ export class MovimientosController {
 
   @Get('porSaldoMin/:saldoMin')
   buscarPorSaldoSuperior(@Param('saldoMin') saldoMin: number) {
-    return this.movimientosService.findCuentasPorSaldoMin(saldoMin);
+    return this.movimientosService.findByCuentaSaldoMin(saldoMin);
   }
 }

@@ -2,14 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { Movimiento } from 'src/model/movimiento';
-import { Between, Repository } from 'typeorm';
+import { Between, MoreThan, Repository } from 'typeorm';
 import { Cuenta } from 'src/model/Cuenta';
+import { Cliente } from 'src/model/cliente';
 
 @Injectable()
 export class MovimientosService {
   constructor(
     @InjectRepository(Movimiento)
     private movimientosRepository: Repository<Movimiento>,
+    @InjectRepository(Cliente)
+    private clienteRepository: Repository<Cliente>,
   ) {}
 
   save(movimiento: Movimiento): Promise<Movimiento> {
@@ -37,5 +40,15 @@ export class MovimientosService {
     return response;
   }
 
-  findCuentasPorSaldoMin(saldoMin: number) {}
+  async findByCuentaSaldoMin(saldo: number): Promise<Cuenta[]> {
+    const resultado = await this.movimientosRepository.find({
+      where: {
+        cuenta: {
+          saldo: MoreThan(saldo),
+        },
+      },
+      relations: ['cuenta'],
+    });
+    return resultado.map((m) => m.cuenta);
+  }
 }
