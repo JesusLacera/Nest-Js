@@ -32,4 +32,9 @@ export class MovimientosController {
   consultarCuenta(@Param('idCuenta') idCuenta: number): Promise<Movimiento[]> {
     return this.movimientosService.findByidCuenta(idCuenta);
   }
+
+  @Get('porSaldoMin/:saldoMin')
+  buscarPorSaldoSuperior(@Param('saldoMin') saldoMin: number) {
+    return this.movimientosService.findCuentasPorSaldoMin(saldoMin);
+  }
 }

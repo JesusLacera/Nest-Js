@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Cuenta } from './Cuenta';
 
 @Entity('movimientos')
 export class Movimiento {
@@ -6,22 +13,24 @@ export class Movimiento {
   idMovimiento: number;
   @Column()
   idCuenta: number;
-  @Column({ type: 'datetime' })
+  @Column({ type: 'date' })
   fecha: Date;
   @Column()
   cantidad: number;
   @Column()
   operacion: string;
-
+  @ManyToOne(() => Cuenta, (cuenta) => cuenta.movimientos)
+  @JoinColumn({ name: 'idCuenta', referencedColumnName: 'numeroCuenta' })
+  cuenta: Cuenta;
   constructor(
     idMovimiento?: number,
-    idCuenta?: number,
+    cuenta?: Cuenta,
     fecha?: Date,
     cantidad?: number,
     operacion?: string,
   ) {
     this.idMovimiento = idMovimiento;
-    this.idCuenta = idCuenta;
+    this.cuenta = cuenta;
     this.fecha = fecha;
     this.cantidad = cantidad;
     this.operacion = operacion;

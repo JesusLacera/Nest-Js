@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { Movimiento } from 'src/model/movimiento';
 import { Between, Repository } from 'typeorm';
+import { Cuenta } from 'src/model/Cuenta';
 
 @Injectable()
 export class MovimientosService {
@@ -16,7 +17,14 @@ export class MovimientosService {
   }
 
   findByidCuenta(idCuenta: number): Promise<Movimiento[]> {
-    return this.movimientosRepository.findBy({ idCuenta: idCuenta });
+    return this.movimientosRepository.find({
+      where: {
+        cuenta: {
+          numeroCuenta: idCuenta,
+        },
+      },
+      relations: ['movimientos'],
+    });
   }
 
   async findByFecha(
@@ -28,4 +36,6 @@ export class MovimientosService {
     });
     return response;
   }
+
+  findCuentasPorSaldoMin(saldoMin: number) {}
 }
