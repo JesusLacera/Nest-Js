@@ -24,7 +24,7 @@ export class MovimientosService {
     return this.movimientosRepository.find({
       where: {
         cuenta: {
-          numeroCuenta: idCuenta,
+          idCuenta: cuenta,
         },
       },
       relations: ['movimientos'],
