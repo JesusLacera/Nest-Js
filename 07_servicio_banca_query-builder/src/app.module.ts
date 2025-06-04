@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
-import { MovimientosController } from './controller/movimientos.controller';
 import { MovimientosService } from './service/movimientos.service';
-import { Movimiento } from './model/movimiento';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Cuenta } from './model/Cuenta';
-import { CuentasController } from './controller/cuentas.controller';
 import { CuentasService } from './service/cuentas.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Movimiento } from './model/movimiento';
+import { Cuenta } from './model/Cuenta';
 import { Cliente } from './model/cliente';
+import { MovimientosController } from './controller/movimientos.controller';
+import { CuentasController } from './controller/cuentas.controller';
 
 @Module({
   imports: [
-    .forRoot({
+    TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 3306,TypeOrmModule
+      port: 3306,
       username: 'nestuser',
       password: 'nestpass',
       database: 'bancabd',
