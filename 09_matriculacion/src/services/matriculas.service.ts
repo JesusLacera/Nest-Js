@@ -10,7 +10,6 @@ import { CursoDatoDto } from 'src/DTOs/CursoDatoDto';
 @Injectable()
 export class MatriculasService {
   constructor(
-    @InjectRepository(Alumno) private alumnoRepository: Repository<Alumno>,
     @InjectRepository(Curso) private cursoRepository: Repository<Curso>,
     @InjectRepository(Matricula)
     private matriculaRepository: Repository<Matricula>,
